@@ -46,7 +46,7 @@
 
     /* ===== HERO ===== */
     .hero { background: var(--bleu-nuit); background-image: radial-gradient(ellipse at 80% 20%, rgba(0,93,187,0.4) 0%, transparent 60%), radial-gradient(ellipse at 10% 80%, rgba(200,169,110,0.12) 0%, transparent 50%); padding: 72px 24px 56px; text-align: center; color: white; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px); pointer-events: none; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px); }
     .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.4); color: var(--or-pale); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 16px; border-radius: 99px; margin-bottom: 24px; }
     .hero h1 { font-family: var(--font-titre); font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.02em; }
     .hero h1 span { color: var(--or); display: block; }
@@ -191,8 +191,8 @@
     .footer-social a:hover { color: var(--or); }
 
     /* ===== MODAL ===== */
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,15,40,0.75); z-index: 1000; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px; pointer-events: none; }
-    .modal-overlay.open { display: flex; pointer-events: all; }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,15,40,0.75); z-index: 1000; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
     .modal { background: white; border-radius: 16px; max-width: 680px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 36px; position: relative; animation: modalIn 0.25s ease; }
     @keyframes modalIn { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .modal-close { position: absolute; top: 14px; right: 14px; background: var(--gris-clair); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
@@ -229,42 +229,6 @@
       body { font-size: 12px; }
     }
 
-    /* ===== CHAT ===== */
-    .chat-section { background: var(--bleu-nuit); padding: 56px 24px; position: relative; z-index: 10; }
-    .chat-inner { max-width: 800px; margin: 0 auto; }
-    .chat-header { margin-bottom: 24px; }
-    .chat-header h2 { font-family: var(--font-titre); font-size: 1.5rem; font-weight: 800; color: white; margin-bottom: 8px; }
-    .chat-header p { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
-    .chat-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--r-lg); overflow: hidden; }
-    .chat-messages { height: 380px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; }
-    .chat-messages::-webkit-scrollbar { width: 4px; }
-    .chat-messages::-webkit-scrollbar-track { background: transparent; }
-    .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
-    .chat-msg { display: flex; gap: 10px; align-items: flex-start; max-width: 90%; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
-    .chat-avatar { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
-    .chat-msg.ai .chat-avatar { background: var(--or); color: var(--bleu-nuit); }
-    .chat-msg.user .chat-avatar { background: var(--bleu-clair); color: white; }
-    .chat-bubble { padding: 10px 14px; border-radius: 12px; font-size: 0.875rem; line-height: 1.6; }
-    .chat-msg.ai .chat-bubble { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); border-radius: 2px 12px 12px 12px; }
-    .chat-msg.user .chat-bubble { background: var(--bleu-clair); color: white; border-radius: 12px 2px 12px 12px; }
-    .chat-msg.ai .chat-bubble a { color: var(--or); }
-    .chat-typing { display: flex; gap: 4px; align-items: center; padding: 10px 14px; }
-    .chat-typing span { width: 6px; height: 6px; background: rgba(255,255,255,0.4); border-radius: 50%; animation: bounce 1.2s infinite; }
-    .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
-    .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-6px); } }
-    .chat-input-row { display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,0.1); }
-    .chat-input { flex: 1; background: transparent; border: none; padding: 16px 20px; color: white; font-family: var(--font-corps); font-size: 0.9rem; outline: none; }
-    .chat-input::placeholder { color: rgba(255,255,255,0.3); }
-    .chat-send { background: var(--or); border: none; padding: 12px 20px; color: var(--bleu-nuit); font-family: var(--font-titre); font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-    .chat-send:hover { background: var(--or-pale); }
-    .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
-    .chat-suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .chat-suggestion { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); font-size: 0.78rem; padding: 6px 12px; border-radius: 99px; cursor: pointer; transition: all 0.2s; font-family: var(--font-corps); }
-    .chat-suggestion:hover { background: rgba(200,169,110,0.15); border-color: rgba(200,169,110,0.4); color: var(--or-pale); }
-    .chat-section * { position: relative; z-index: 10; }
     .chat-disclaimer { font-size: 0.72rem; color: rgba(255,255,255,0.3); margin-top: 12px; text-align: center; }
 
   </style>
@@ -406,6 +370,14 @@
   </div>
 </div>
 
+<!-- CHAT LINK -->
+<div style="background: var(--bleu-nuit); padding: 32px 24px; text-align: center; border-top: 1px solid rgba(200,169,110,0.2);">
+  <a href="chat.html" style="display:inline-flex; align-items:center; gap:10px; background:var(--or); color:var(--bleu-nuit); font-family:var(--font-titre); font-weight:800; font-size:1rem; padding:14px 32px; border-radius:8px; text-decoration:none; transition: background 0.2s;">
+    💬 Posez vos questions sur le budget
+  </a>
+  <p style="margin-top:12px; font-size:0.78rem; color:rgba(255,255,255,0.35);">Alimenté par Gemini 2.5 Flash · Documents officiels MFQ</p>
+</div>
+
 <!-- NOTE IA -->
 <section class="ia-note">
   <div class="ia-note-inner">
@@ -458,37 +430,6 @@
   </div>
 </div>
 
-
-<!-- CHAT IA -->
-<div class="chat-section" id="chat">
-  <div class="chat-inner">
-    <div class="chat-header">
-      <h2>💬 Posez vos questions sur le budget</h2>
-      <p>Alimenté par Gemini 2.5 Flash · Basé sur les documents officiels du ministère des Finances du Québec 2025-2026</p>
-    </div>
-    <div class="chat-box">
-      <div class="chat-messages" id="chat-messages">
-        <div class="chat-msg ai">
-          <div class="chat-avatar">⚜</div>
-          <div class="chat-bubble">Bonjour! Je suis votre assistant pour analyser le Budget du Québec 2025-2026. Posez-moi n'importe quelle question sur les dépenses, les revenus, les secteurs ou les mesures fiscales — je vais chercher la réponse directement dans les documents officiels du ministère des Finances.</div>
-        </div>
-      </div>
-      <div class="chat-input-row">
-        <input class="chat-input" id="chat-input" type="text" placeholder="Ex: Combien pour la santé? Qu'est-ce que le CRIC? Quel est le déficit prévu?" maxlength="500">
-        <button class="chat-send" id="chat-send" onclick="envoyerMessage()">Envoyer →</button>
-      </div>
-    </div>
-    <div class="chat-suggestions">
-      <button class="chat-suggestion" onclick="suggerer(this)">Quel est le déficit 2025-2026?</button>
-      <button class="chat-suggestion" onclick="suggerer(this)">Quelles mesures pour les PME face aux tarifs?</button>
-      <button class="chat-suggestion" onclick="suggerer(this)">Qu'est-ce que le crédit CRIC?</button>
-      <button class="chat-suggestion" onclick="suggerer(this)">Budget total pour la santé?</button>
-      <button class="chat-suggestion" onclick="suggerer(this)">Retour à l'équilibre budgétaire quand?</button>
-      <button class="chat-suggestion" onclick="suggerer(this)">PQI 2025-2035 c'est quoi?</button>
-    </div>
-    <div class="chat-disclaimer">Les réponses sont générées par IA à partir des documents officiels. Consultez les sources officielles pour toute décision importante.</div>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
@@ -729,113 +670,6 @@
     `);
   }
 
-
-  // ===== CHAT GEMINI =====
-  const GEMINI_KEY = 'AIzaSyAEDpz65fGjSvmIiItpOzDvO2Gr7MXwDhk';
-  const PDF_URL = 'https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_PlanBudgetaire.pdf';
-  const BREF_URL = 'https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_BudgetEnBref.pdf';
-  
-  const chatHistory = [];
-  let isLoading = false;
-
-  const SYSTEM_PROMPT = `Tu es un expert en finances publiques québécoises. Tu analyses le Budget du Québec 2025-2026 déposé le 25 mars 2025 par le ministre Eric Girard.
-
-Règles strictes:
-- Réponds UNIQUEMENT en français québécois, de façon claire et accessible
-- Base-toi UNIQUEMENT sur les documents budgétaires fournis
-- Cite les chiffres précis quand disponibles (G$, M$, %)
-- Si une information n'est pas dans les documents, dis-le clairement
-- Sois concis: 2-4 paragraphes maximum
-- Utilise des chiffres en milliards (G$) ou millions (M$) comme dans le budget`;
-
-  async function envoyerMessage() {
-    const input = document.getElementById('chat-input');
-    const q = input.value.trim();
-    if (!q || isLoading) return;
-    
-    ajouterMessage(q, 'user');
-    input.value = '';
-    isLoading = true;
-    document.getElementById('chat-send').disabled = true;
-    
-    const typing = document.createElement('div');
-    typing.className = 'chat-msg ai';
-    typing.id = 'typing';
-    typing.innerHTML = '<div class="chat-avatar">⚜</div><div class="chat-bubble"><div class="chat-typing"><span></span><span></span><span></span></div></div>';
-    document.getElementById('chat-messages').appendChild(typing);
-    scrollChat();
-
-    try {
-      chatHistory.push({ role: 'user', parts: [{ text: q }] });
-      
-      const body = {
-        system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              { file_data: { mime_type: 'application/pdf', file_uri: PDF_URL } },
-              { file_data: { mime_type: 'application/pdf', file_uri: BREF_URL } },
-              { text: 'Voici les documents officiels du Budget du Québec 2025-2026.' }
-            ]
-          },
-          { role: 'model', parts: [{ text: 'Documents reçus. Je suis prêt à répondre à vos questions sur le Budget du Québec 2025-2026.' }] },
-          ...chatHistory
-        ],
-        generationConfig: { temperature: 0.2, maxOutputTokens: 1024 }
-      };
-
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`,
-        { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
-      );
-      
-      const data = await res.json();
-      
-      if (data.error) throw new Error(data.error.message);
-      
-      const reponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Désolé, je n'ai pas pu générer une réponse. Veuillez réessayer.';
-      chatHistory.push({ role: 'model', parts: [{ text: reponse }] });
-      
-      document.getElementById('typing')?.remove();
-      ajouterMessage(reponse, 'ai');
-      
-    } catch(e) {
-      document.getElementById('typing')?.remove();
-      ajouterMessage('Une erreur s'est produite. Vérifiez votre connexion et réessayez.', 'ai');
-      console.error(e);
-    }
-    
-    isLoading = false;
-    document.getElementById('chat-send').disabled = false;
-    input.focus();
-  }
-
-  function ajouterMessage(texte, role) {
-    const div = document.createElement('div');
-    div.className = `chat-msg ${role}`;
-    const avatar = role === 'ai' ? '⚜' : 'KL';
-    // Convert markdown-like bold to HTML
-    const html = texte.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/
-/g, '<br>');
-    div.innerHTML = `<div class="chat-avatar">${avatar}</div><div class="chat-bubble">${html}</div>`;
-    document.getElementById('chat-messages').appendChild(div);
-    scrollChat();
-  }
-
-  function scrollChat() {
-    const msgs = document.getElementById('chat-messages');
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  function suggerer(btn) {
-    document.getElementById('chat-input').value = btn.textContent;
-    document.getElementById('chat-input').focus();
-  }
-
-  document.getElementById('chat-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); envoyerMessage(); }
-  });
 
   // ===== RECHERCHE =====
   let searchTimer = null;
