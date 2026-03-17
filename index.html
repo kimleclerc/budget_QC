@@ -775,6 +775,7 @@
   <p class="hero-sub">Décortiqué, analysé, rendu accessible. <br>Avec l'aide d'outils d'intelligence artificielle spécialisés.</p>
   <div class="search-bar-wrap">
     <input class="search-bar" type="text" id="recherche" placeholder="Rechercher un secteur, une mesure, un terme…" oninput="filtrerContenu(this.value)">
+    <div id="search-results-info" style="display:none; margin-top:10px; font-size:0.82rem; color:rgba(255,255,255,0.6); text-align:center;"></div>
   </div>
   <div class="hero-byline">
     Analyse préparée avec l'aide d'outils IA spécialisés ·
@@ -1061,20 +1062,40 @@
   }
 
   // ===== RECHERCHE =====
+  let searchTimer = null;
   function filtrerContenu(q) {
     if (!q) {
       renderSecteurs(BUDGET.secteurs);
       renderAudiences(BUDGET.audiences);
       renderPP(BUDGET.parties_prenantes);
+      document.getElementById('search-results-info').style.display = 'none';
       return;
     }
-    const terme = q.toLowerCase();
-    const filterFn = item =>
-      JSON.stringify(item).toLowerCase().includes(terme);
 
-    renderSecteurs(BUDGET.secteurs.filter(filterFn));
-    renderAudiences(BUDGET.audiences.filter(filterFn));
-    renderPP(BUDGET.parties_prenantes.filter(filterFn));
+    const terme = q.toLowerCase();
+    const filterFn = item => JSON.stringify(item).toLowerCase().includes(terme);
+
+    const secteurs = BUDGET.secteurs.filter(filterFn);
+    const audiences = BUDGET.audiences.filter(filterFn);
+    const pp = BUDGET.parties_prenantes.filter(filterFn);
+    const total = secteurs.length + audiences.length + pp.length;
+
+    renderSecteurs(secteurs);
+    renderAudiences(audiences);
+    renderPP(pp);
+
+    // Afficher le compteur
+    const info = document.getElementById('search-results-info');
+    info.style.display = 'block';
+    info.textContent = total > 0
+      ? `${total} résultat${total > 1 ? 's' : ''} pour « ${q} »`
+      : `Aucun résultat pour « ${q} »`;
+
+    // Scroll vers les résultats (avec délai pour laisser le temps de taper)
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      document.getElementById('secteurs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
   }
 </script>
 </body>
