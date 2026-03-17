@@ -108,8 +108,7 @@
 </main>
 
 <script>
-const GEMINI_KEY = 'AIzaSyC9kdZ6MNxR9FQ-iz4GaN1zPFqSwuxHoAg';
-const PDF_PLAN = 'https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_PlanBudgetaire.pdf';
+const WORKER_URL = 'https://frosty-credit-453d.hrfzy8bzry.workers.dev';
 const PDF_BREF = 'https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_BudgetEnBref.pdf';
 
 const SYSTEM = `Tu es un expert en finances publiques québécoises. Tu analyses le Budget du Québec 2025-2026 déposé le 25 mars 2025 par Eric Girard.
@@ -179,10 +178,11 @@ async function send() {
       generationConfig: { temperature: 0.15, maxOutputTokens: 1024 }
     };
 
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }
-    );
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
 
     const data = await res.json();
     document.getElementById('typing')?.remove();
