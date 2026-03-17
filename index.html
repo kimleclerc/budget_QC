@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Québec 2025-2026 — Analyse indépendante</title>
+  <meta name="description" content="Analyse indépendante du Budget du Québec. Décortiquer, comprendre, agir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bleu: #003DA5;
+      --bleu-clair: #005BBB;
+      --bleu-nuit: #001A4D;
+      --or: #C8A96E;
+      --or-pale: #E8D5B0;
+      --blanc: #F8F7F4;
+      --gris: #6B7280;
+      --gris-clair: #E5E2DB;
+      --rouge: #C0392B;
+      --vert: #1A7A4A;
+      --texte: #1A1A2E;
+
+      --font-titre: 'Syne', sans-serif;
+      --font-corps: 'DM Sans', sans-serif;
+
+      --r: 6px;
+      --r-lg: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-corps);
+      background: var(--blanc);
+      color: var(--texte);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bleu-nuit);
+      border-bottom: 2px solid var(--or);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-titre);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo .fleur {
+      color: var(--or);
+      font-size: 1.3rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-corps);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: var(--r);
+      transition: all 0.2s;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+      background: rgba(200, 169, 110, 0.2);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--bleu-nuit);
+      background-image:
+        radial-gradient(ellipse at 80% 20%, rgba(0,93,187,0.4) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 80%, rgba(200,169,110,0.12) 0%, transparent 50%);
+      padding: 80px 24px 64px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        0deg, transparent, transparent 39px,
+        rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px
+      ),
+      repeating-linear-gradient(
+        90deg, transparent, transparent 39px,
+        rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px
+      );
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200, 169, 110, 0.15);
+      border: 1px solid rgba(200, 169, 110, 0.4);
+      color: var(--or-pale);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 99px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-titre);
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 span {
+      color: var(--or);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+    }
+
+    .hero-byline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      font-style: italic;
+    }
+
+    .hero-byline strong {
+      color: var(--or-pale);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: var(--r);
+      font-family: var(--font-corps);
+      font-weight: 500;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--or);
+      color: var(--bleu-nuit);
+    }
+
+    .btn-primary:hover {
+      background: var(--or-pale);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .btn-outline:hover {
+      border-color: rgba(255,255,255,0.7);
+      color: #fff;
+    }
+
+    /* ===== CHIFFRES CLÉS ===== */
+    .section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      font-family: var(--font-titre);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--texte);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .icon {
+      width: 32px;
+      height: 32px;
+      background: var(--bleu);
+      border-radius: var(--r);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .section-count {
+      font-size: 0.82rem;
+      color: var(--gris);
+      font-weight: 400;
+    }
+
+    .voir-tout {
+      font-size: 0.85rem;
+      color: var(--bleu);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .voir-tout:hover { text-decoration: underline; }
+
+    /* Grille chiffres */
+    .chiffres-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .chiffres-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .chiffres-grid { grid-template-columns: 1fr; }
+    }
+
+    .chiffre-card {
+      background: white;
+      border: 1px solid var(--gris-clair);
+      border-radius: var(--r-lg);
+      padding: 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .chiffre-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .chiffre-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--gris);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .chiffre-valeur {
+      font-family: var(--font-titre);
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--bleu-nuit);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .chiffre-note {
+      font-size: 0.8rem;
+      color: var(--gris);
+      margin-bottom: 12px;
+    }
+
+    .variation-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 99px;
+    }
+
+    .var-up { background: #ECFDF5; color: var(--vert); }
+    .var-down { background: #FEF2F2; color: var(--rouge); }
+    .var-neutral { background: #F3F4F6; color: var(--gris); }
+
+    /* ===== SECTEURS ===== */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--gris-clair);
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .articles-grid { grid-template-columns: 1fr; }
+    }
+
+    .article-card {
+      background: white;
+      border: 1px solid var(--gris-clair);
+      border-radius: var(--r-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .article-card:hover {
+      border-color: var(--bleu-clair);
+      box-shadow: 0 4px 20px rgba(0,61,165,0.08);
+      transform: translateY(-2px);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .priorite-badge {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .p-haute { background: #EFF6FF; color: var(--bleu); }
+    .p-moyenne { background: #F0FDF4; color: #166534; }
+
+    .card-metric {
+      font-size: 0.72rem;
+      color: var(--gris);
+      font-weight: 400;
+    }
+
+    .card-metric strong {
+      font-family: var(--font-titre);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--texte);
+      display: block;
+    }
+
+    .article-card h3 {
+      font-family: var(--font-titre);
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--texte);
+    }
+
+    .article-card p {
+      font-size: 0.85rem;
+      color: var(--gris);
+      line-height: 1.55;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      font-size: 0.7rem;
+      color: var(--gris);
+      background: var(--gris-clair);
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,15,40,0.7);
+      z-index: 1000;
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 40px;
+      position: relative;
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--gris-clair);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { background: #d1cdc8; }
+
+    .modal-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--bleu);
+      background: #EFF6FF;
+      padding: 3px 10px;
+      border-radius: 99px;
+      margin-bottom: 14px;
+    }
+
+    .modal h2 {
+      font-family: var(--font-titre);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--bleu-nuit);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .modal-depenses {
+      font-family: var(--font-titre);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--bleu);
+      margin-bottom: 4px;
+    }
+
+    .modal-variation {
+      font-size: 0.82rem;
+      color: var(--gris);
+      margin-bottom: 20px;
+    }
+
+    .modal p {
+      font-size: 0.95rem;
+      color: #4B5563;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .modal h4 {
+      font-family: var(--font-titre);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--texte);
+      margin-bottom: 12px;
+    }
+
+    .modal ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .modal ul li::before {
+      content: '◆';
+      color: var(--or);
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 0.7rem;
+    }
+
+    .modal-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .modal-metric {
+      background: var(--blanc);
+      border: 1px solid var(--gris-clair);
+      border-radius: var(--r);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .modal-metric strong {
+      display: block;
+      font-family: var(--font-titre);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--bleu-nuit);
+    }
+
+    .modal-metric span {
+      font-size: 0.75rem;
+      color: var(--gris);
+    }
+
+    /* ===== COMPARAISON TABLE ===== */
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .compare-table th {
+      font-family: var(--font-titre);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gris);
+      padding: 12px 16px;
+      background: var(--blanc);
+      border-bottom: 2px solid var(--gris-clair);
+      text-align: left;
+    }
+
+    .compare-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--gris-clair);
+      font-size: 0.9rem;
+      color: var(--texte);
+    }
+
+    .compare-table tr:last-child td { border-bottom: none; }
+
+    .compare-table tr:hover td { background: #F9F8F6; }
+
+    .diff-up { color: var(--vert); font-weight: 600; }
+    .diff-down { color: var(--rouge); font-weight: 600; }
+
+    /* ===== IA NOTE ===== */
+    .ia-note {
+      background: linear-gradient(135deg, var(--bleu-nuit) 0%, var(--bleu) 100%);
+      color: white;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .ia-note-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .ia-note h2 {
+      font-family: var(--font-titre);
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .ia-note p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .outils-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .outil-pill {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 99px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bleu-nuit);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(200,169,110,0.3);
+    }
+
+    footer strong { color: var(--or-pale); }
+
+    /* ===== SEARCH ===== */
+    .search-bar-wrap {
+      max-width: 560px;
+      margin: 0 auto 40px;
+    }
+
+    .search-bar {
+      width: 100%;
+      padding: 14px 20px;
+      border: 2px solid rgba(255,255,255,0.2);
+      border-radius: var(--r-lg);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-family: var(--font-corps);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-bar::placeholder { color: rgba(255,255,255,0.4); }
+
+    .search-bar:focus {
+      border-color: var(--or);
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* ===== TABS ===== */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--gris-clair);
+      border-radius: var(--r-lg);
+      padding: 4px;
+      margin-bottom: 32px;
+      width: fit-content;
+    }
+
+    .tab-btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: var(--r);
+      background: transparent;
+      font-family: var(--font-corps);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--gris);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: white;
+      color: var(--bleu-nuit);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <span class="fleur">⚜</span>
+      Budget Québec
+    </a>
+    <ul class="nav-links">
+      <li><a href="#chiffres">Vue d'ensemble</a></li>
+      <li><a href="#secteurs">Secteurs</a></li>
+      <li><a href="#audiences">Pour vous</a></li>
+      <li><a href="#parties-prenantes">Parties prenantes</a></li>
+      <li><a href="#comparaison">Comparaison</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">⚜ Analyse indépendante · Budget <span id="hero-annee"></span></div>
+  <h1>Budget Québec<span id="hero-titre-annee"></span></h1>
+  <p class="hero-sub">Décortiqué, analysé, rendu accessible. <br>Avec l'aide d'outils d'intelligence artificielle spécialisés.</p>
+  <div class="search-bar-wrap">
+    <input class="search-bar" type="text" id="recherche" placeholder="Rechercher un secteur, une mesure, un terme…" oninput="filtrerContenu(this.value)">
+  </div>
+  <div class="hero-byline">
+    Analyse préparée avec l'aide d'outils IA spécialisés ·
+    <strong>Kim Leclerc, AUCOIN Stratégie & Communication</strong>
+  </div>
+  <div class="hero-ctas">
+    <a href="#secteurs" class="btn btn-primary">Analyser par secteur</a>
+    <a href="#audiences" class="btn btn-outline">Et pour moi, concrètement?</a>
+  </div>
+</section>
+
+<!-- CHIFFRES CLÉS -->
+<div class="section" id="chiffres">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="icon">◈</span>
+      Budget en chiffres
+      <span class="section-count" id="count-chiffres"></span>
+    </h2>
+  </div>
+  <div class="chiffres-grid" id="grid-chiffres"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- SECTEURS -->
+<div class="section" id="secteurs">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="icon">■</span>
+      Par secteur
+      <span class="section-count" id="count-secteurs"></span>
+    </h2>
+  </div>
+  <div class="articles-grid" id="grid-secteurs"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- AUDIENCES -->
+<div class="section" id="audiences">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="icon">●</span>
+      Et pour vous, concrètement?
+      <span class="section-count" id="count-audiences"></span>
+    </h2>
+  </div>
+  <div class="articles-grid" id="grid-audiences"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- PARTIES PRENANTES -->
+<div class="section" id="parties-prenantes">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="icon">▲</span>
+      Notes pour parties prenantes
+      <span class="section-count" id="count-pp"></span>
+    </h2>
+  </div>
+  <div class="articles-grid" id="grid-pp"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- COMPARAISON -->
+<div class="section" id="comparaison">
+  <div class="section-header">
+    <h2 class="section-title">
+      <span class="icon">◆</span>
+      Comparaison année précédente
+    </h2>
+  </div>
+  <div style="background:white; border:1px solid var(--gris-clair); border-radius: var(--r-lg); overflow:hidden;">
+    <table class="compare-table" id="table-comparaison"></table>
+  </div>
+</div>
+
+<!-- NOTE IA -->
+<section class="ia-note">
+  <div class="ia-note-inner">
+    <h2>Une analyse augmentée par l'IA</h2>
+    <p>
+      Ce site est une démarche personnelle de décryptage des finances publiques québécoises.
+      Les fiches d'analyse ont été générées avec l'aide d'outils d'intelligence artificielle
+      à partir des documents budgétaires officiels du gouvernement du Québec. L'interprétation,
+      le cadrage stratégique et la mise en contexte sont le fruit d'un travail humain.
+    </p>
+    <p style="font-size:0.82rem; color:rgba(255,255,255,0.45);">
+      Ce site n'est pas affilié au gouvernement du Québec ni à aucun parti politique.
+    </p>
+    <div class="outils-grid">
+      <span class="outil-pill">Claude (Anthropic)</span>
+      <span class="outil-pill">Analyse de documents PDF</span>
+      <span class="outil-pill">Synthèse sectorielle</span>
+      <span class="outil-pill">Données officielles MFQ</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong>Budget Québec — Analyse indépendante</strong><br>
+    Kim Leclerc · AUCOIN Stratégie & Communication<br>
+    Les données proviennent des documents officiels du ministère des Finances du Québec.
+  </p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="fermerModal(event)">
+  <div class="modal" id="modal-contenu">
+    <button class="modal-close" onclick="fermerModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="data/budget.js"></script>
+<script>
+  // ===== INIT =====
+  document.getElementById('hero-annee').textContent = BUDGET.annee;
+  document.getElementById('hero-titre-annee').textContent = BUDGET.annee;
+  document.getElementById('count-chiffres').textContent = `${BUDGET.chiffres.length} indicateurs`;
+  document.getElementById('count-secteurs').textContent = `${BUDGET.secteurs.length} articles`;
+  document.getElementById('count-audiences').textContent = `${BUDGET.audiences.length} profils`;
+  document.getElementById('count-pp').textContent = `${BUDGET.parties_prenantes.length} notes`;
+
+  // ===== CHIFFRES =====
+  function renderChiffres(data) {
+    const grid = document.getElementById('grid-chiffres');
+    grid.innerHTML = data.map(c => `
+      <div class="chiffre-card">
+        <div class="chiffre-label">${c.label}</div>
+        <div class="chiffre-valeur">${c.valeur}</div>
+        <div class="chiffre-note">${c.note}</div>
+        <span class="variation-badge var-${c.direction}">
+          ${c.direction === 'up' ? '↑' : c.direction === 'down' ? '↓' : '→'} ${c.variation}
+        </span>
+      </div>
+    `).join('');
+  }
+  renderChiffres(BUDGET.chiffres);
+
+  // ===== SECTEURS =====
+  function renderSecteurs(data) {
+    const grid = document.getElementById('grid-secteurs');
+    grid.innerHTML = data.map((s, i) => `
+      <a class="article-card" href="#" onclick="ouvrirSecteur(${i}); return false;">
+        <div class="card-top">
+          <span class="priorite-badge p-${s.priorite}">${s.priorite}</span>
+          <div class="card-metric">
+            <strong>${s.depenses}</strong>
+            ${s.variation}
+          </div>
+        </div>
+        <h3>${s.titre}</h3>
+        <p>${s.resume}</p>
+        <div class="card-tags">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </a>
+    `).join('');
+  }
+  renderSecteurs(BUDGET.secteurs);
+
+  // ===== AUDIENCES =====
+  function renderAudiences(data) {
+    const grid = document.getElementById('grid-audiences');
+    grid.innerHTML = data.map((a, i) => `
+      <a class="article-card" href="#" onclick="ouvrirAudience(${i}); return false;">
+        <div class="card-top">
+          <span class="priorite-badge p-${a.priorite}">${a.priorite}</span>
+        </div>
+        <h3>Budget ${BUDGET.annee} : ce que ça signifie pour les ${a.titre}</h3>
+        <p>${a.resume}</p>
+        <div class="card-tags">${a.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </a>
+    `).join('');
+  }
+  renderAudiences(BUDGET.audiences);
+
+  // ===== PARTIES PRENANTES =====
+  function renderPP(data) {
+    const grid = document.getElementById('grid-pp');
+    grid.innerHTML = data.map((p, i) => `
+      <a class="article-card" href="#" onclick="ouvrirPP(${i}); return false;">
+        <div class="card-top">
+          <span class="priorite-badge p-${p.priorite}">${p.priorite}</span>
+        </div>
+        <h3>${p.titre}</h3>
+        <p>${p.resume}</p>
+        <div class="card-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </a>
+    `).join('');
+  }
+  renderPP(BUDGET.parties_prenantes);
+
+  // ===== COMPARAISON =====
+  const comp = BUDGET.comparaison;
+  document.getElementById('table-comparaison').innerHTML = `
+    <thead>
+      <tr>
+        <th>Indicateur</th>
+        <th>${comp.annee_precedente}</th>
+        <th>${BUDGET.annee}</th>
+        <th>Variation</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${comp.elements.map(e => `
+        <tr>
+          <td><strong>${e.label}</strong></td>
+          <td>${e.avant}</td>
+          <td><strong>${e.apres}</strong></td>
+          <td class="${e.direction === 'up' ? 'diff-up' : e.direction === 'down' ? 'diff-down' : ''}">
+            ${e.direction === 'up' ? '↑' : e.direction === 'down' ? '↓' : '→'}
+          </td>
+        </tr>
+      `).join('')}
+    </tbody>
+  `;
+
+  // ===== MODALS =====
+  function ouvrirModal(html) {
+    document.getElementById('modal-body').innerHTML = html;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fermerModal(e) {
+    if (!e || e.target === document.getElementById('modal-overlay')) {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fermerModal();
+  });
+
+  function ouvrirSecteur(i) {
+    const s = BUDGET.secteurs[i];
+    ouvrirModal(`
+      <span class="modal-badge">Secteur</span>
+      <h2>${s.titre}</h2>
+      <div class="modal-depenses">${s.depenses}</div>
+      <div class="modal-variation">Variation : ${s.variation}</div>
+      <p>${s.resume}</p>
+      <h4>Mesures clés</h4>
+      <ul>${s.points.map(p => `<li>${p}</li>`).join('')}</ul>
+      <div class="card-tags" style="margin-top:20px;">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    `);
+  }
+
+  function ouvrirAudience(i) {
+    const a = BUDGET.audiences[i];
+    ouvrirModal(`
+      <span class="modal-badge">Pour vous</span>
+      <h2>${a.titre}</h2>
+      <p>${a.resume}</p>
+      <div class="modal-metrics">
+        ${a.mesures.map(m => `
+          <div class="modal-metric">
+            <strong>${m.valeur}</strong>
+            <span>${m.label}</span>
+            <span style="font-size:0.7rem; color:#9CA3AF;">${m.note}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="card-tags">${a.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    `);
+  }
+
+  function ouvrirPP(i) {
+    const p = BUDGET.parties_prenantes[i];
+    ouvrirModal(`
+      <span class="modal-badge">Partie prenante</span>
+      <h2>${p.titre}</h2>
+      <p>${p.resume}</p>
+      <h4>Enjeux de représentation</h4>
+      <ul>${p.enjeux.map(e => `<li>${e}</li>`).join('')}</ul>
+      <div class="card-tags" style="margin-top:20px;">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    `);
+  }
+
+  // ===== RECHERCHE =====
+  function filtrerContenu(q) {
+    if (!q) {
+      renderSecteurs(BUDGET.secteurs);
+      renderAudiences(BUDGET.audiences);
+      renderPP(BUDGET.parties_prenantes);
+      return;
+    }
+    const terme = q.toLowerCase();
+    const filterFn = item =>
+      JSON.stringify(item).toLowerCase().includes(terme);
+
+    renderSecteurs(BUDGET.secteurs.filter(filterFn));
+    renderAudiences(BUDGET.audiences.filter(filterFn));
+    renderPP(BUDGET.parties_prenantes.filter(filterFn));
+  }
+</script>
+</body>
+</html>
