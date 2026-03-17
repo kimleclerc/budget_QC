@@ -408,6 +408,658 @@
       <p>Le budget du Québec est un document de plusieurs centaines de pages, publié une fois par an, qui touche à tout — la santé, l'éducation, les entreprises, les régions, la dette. Pourtant, il est rarement décortiqué de façon accessible, sectorielle et stratégique pour les non-spécialistes.</p>
       <p>Ce site est une initiative personnelle pour démocratiser la compréhension des finances publiques québécoises, en utilisant des outils d'intelligence artificielle pour analyser rapidement les documents officiels du ministère des Finances et en produire des fiches lisibles par tous.</p>
       <p>Je suis conseiller principal chez <a href="https://www.aucoinstrategie.com/" target="_blank" class="aucoin-link">AUCOIN Stratégie & Communication</a>, spécialisé en affaires publiques, relations gouvernementales et communications stratégiques. Ce site reflète mon point de vue indépendant, pas celui de mes clients.</p>
+      <p style="font-size:0.82rem; color:var(--gris); border-top:1px solid var(--gris-clair); padding-top:14px; margin-top:4px;">
+        Sources officielles : 
+        <a href="https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_PlanBudgetaire.pdf" target="_blank" class="aucoin-link">Plan budgétaire 2025-2026</a> · 
+        <a href="https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_BudgetEnBref.pdf" target="_blank" class="aucoin-link">Budget en bref</a> · 
+        Ministère des Finances du Québec
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <strong>Budget Québec — Analyse indépendante</strong><br>
+      Kim Leclerc · AUCOIN Stratégie & Communication<br>
+      Données : ministère des Finances du Québec · Budget 2025-2026
+    </div>
+    <div class="footer-social">
+      <a href="https://kimleclerc.substack.com/" target="_blank">✉ Substack</a>
+      <a href="https://x.com/kimleclerc" target="_blank">𝕏 Twitter/X</a>
+      <a href="https://www.linkedin.com/in/kimleclerc/" target="_blank">in LinkedIn</a>
+      <a href="https://www.aucoinstrategie.com/" target="_blank">↗ AUCOIN</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="fermerModal(event)">
+  <div class="modal" id="modal-contenu">
+    <button class="modal-close" onclick="fermerModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script src="data/budget.js"></script>
+<script>
+  const SOURCE_PDF = "https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_PlanBudgetaire.pdf";
+
+  // ===== INIT =====
+  document.getElementById('hero-annee').textContent = BUDGET.annee;
+  document.getElementById('hero-titre-annee').textContent = BUDGET.annee;
+  document.getElementById('count-chiffres').textContent = `${BUDGET.chiffres.length} indicateurs`;
+  document.getElementById('count-secteurs').textContent = `${BUDGET.secteurs.length} articles`;
+  document.getElementById('count-audiences').textContent = `${BUDGET.audiences.length} profils`;
+  document.getElementById('count-pp').textContent = `${BUDGET.parties_prenantes.length} notes`;
+
+  // ===== TRAJECTOIRE DÉFICIT =====
+  // Graphique trajectoire — SVG propre
+  (function() {
+    const data = [
+      { annee: "24-25", val: -8.1, reel: true },
+      { annee: "25-26", val: -11.4, reel: false },
+      { annee: "26-27", val: -7.1, reel: false },
+      { annee: "27-28", val: -4.2, reel: false },
+      { annee: "28-29", val: -1.4, reel: false },
+      { annee: "29-30", val: 0.4, reel: false },
+    ];
+    const W = 860, H = 200, pad = { top: 40, bottom: 30, left: 10, right: 10 };
+    const innerH = H - pad.top - pad.bottom;
+    const innerW = W - pad.left - pad.right;
+    const maxAbs = 12; // échelle fixe pour que -11.4 soit presque max
+    const colW = innerW / data.length;
+    
+    let bars = '';
+    data.forEach((d, i) => {
+      const isPos = d.val >= 0;
+      const barH = Math.max(6, (Math.abs(d.val) / maxAbs) * innerH);
+      const x = pad.left + i * colW + colW * 0.15;
+      const bW = colW * 0.7;
+      const y = pad.top + (isPos ? innerH - barH : innerH - barH);
+      const color = isPos ? '#27AE60' : (d.reel ? '#E74C3C' : '#E74C3C');
+      const opacity = d.reel ? 1 : 0.8;
+      const label = (isPos ? '+' : '') + d.val;
+      const labelY = isPos ? y - 8 : y - 8;
+      const labelColor = isPos ? '#27AE60' : '#E74C3C';
+      
+      bars += `<rect x="${x}" y="${y}" width="${bW}" height="${barH}" rx="3" fill="${color}" opacity="${opacity}"/>`;
+      bars += `<text x="${x + bW/2}" y="${labelY}" text-anchor="middle" font-family="Syne,sans-serif" font-weight="700" font-size="13" fill="${labelColor}">${label}</text>`;
+      bars += `<text x="${x + bW/2}" y="${pad.top + innerH + 18}" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" fill="rgba(255,255,255,0.45)">${d.annee}</text>`;
+    });
+    
+    // ligne de base zéro
+    const zeroY = pad.top + innerH;
+    const svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:${W}px;display:block;">
+      <line x1="${pad.left}" y1="${zeroY}" x2="${W - pad.right}" y2="${zeroY}" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+      ${bars}
+    </svg>`;
+    document.getElementById('traj-bars').innerHTML = svg;
+    document.getElementById('traj-bars').style.height = 'auto';
+  })();
+
+  // ===== CHIFFRES =====
+  function renderChiffres(data) {
+    document.getElementById('grid-chiffres').innerHTML = data.map(c => `
+      <div class="chiffre-card">
+        <div class="chiffre-label">${c.label}</div>
+        <div class="chiffre-valeur">${c.valeur}</div>
+        <div class="chiffre-note">${c.note}</div>
+        <span class="variation-badge var-${c.direction}">
+          ${c.direction === 'up' ? '↑' : c.direction === 'down' ? '↓' : '→'} ${c.variation}
+        </span>
+      </div>
+    `).join('');
+  }
+  renderChiffres(BUDGET.chiffres);
+
+  // ===== SECTEURS =====
+  function renderSecteurs(data) {
+    document.getElementById('grid-secteurs').innerHTML = data.map((s, i) => `
+      <a class="article-card" href="#" onclick="ouvrirSecteur(${BUDGET.secteurs.indexOf(s)}); return false;">
+        <div class="card-top">
+          <span class="priorite-badge p-${s.priorite}">${s.priorite}</span>
+          <div class="card-metric"><strong>${s.depenses}</strong>${s.variation}</div>
+        </div>
+        <h3>${s.titre}</h3>
+        <p>${s.resume.substring(0,120)}…</p>
+      </a>
+    `).join('');
+  }
+  renderSecteurs(BUDGET.secteurs);
+
+  // ===== AUDIENCES =====
+  function renderAudiences(data) {
+    document.getElementById('grid-audiences').innerHTML = data.map((a) => `
+      <a class="article-card" href="#" onclick="ouvrirAudience(${BUDGET.audiences.indexOf(a)}); return false;">
+        <div class="card-top"><span class="priorite-badge p-${a.priorite}">${a.priorite}</span></div>
+        <h3>Budget ${BUDGET.annee} : ${a.titre}</h3>
+        <p>${a.resume.substring(0,120)}…</p>
+        <div class="card-tags">${a.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </a>
+    `).join('');
+  }
+  renderAudiences(BUDGET.audiences);
+
+  // ===== PARTIES PRENANTES =====
+  function renderPP(data) {
+    document.getElementById('grid-pp').innerHTML = data.map((p) => `
+      <a class="article-card" href="#" onclick="ouvrirPP(${BUDGET.parties_prenantes.indexOf(p)}); return false;">
+        <div class="card-top"><span class="priorite-badge p-${p.priorite}">${p.priorite}</span></div>
+        <h3>${p.titre}</h3>
+        <p>${p.resume.substring(0,120)}…</p>
+        <div class="card-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </a>
+    `).join('');
+  }
+  renderPP(BUDGET.parties_prenantes);
+
+  // ===== COMPARAISON =====
+  const comp = BUDGET.comparaison;
+  document.getElementById('table-comparaison').innerHTML = `
+    <thead><tr>
+      <th>Indicateur</th>
+      <th>${comp.annee_precedente}</th>
+      <th>${BUDGET.annee}</th>
+      <th>Var.</th>
+    </tr></thead>
+    <tbody>${comp.elements.map(e => `
+      <tr>
+        <td><strong>${e.label}</strong></td>
+        <td style="color:var(--gris);">${e.avant}</td>
+        <td><strong>${e.apres}</strong></td>
+        <td class="${e.direction === 'up' ? 'diff-up' : e.direction === 'down' ? 'diff-down' : ''}">${e.direction === 'up' ? '↑' : e.direction === 'down' ? '↓' : '→'}</td>
+      </tr>`).join('')}
+    </tbody>`;
+
+  // ===== GLOSSAIRE =====
+  const GLOSSAIRE = [
+    { terme: "Déficit comptable", def: "Écart entre les revenus et les dépenses du gouvernement, calculé avant les versements au Fonds des générations. C'est le chiffre le plus souvent cité dans les médias." },
+    { terme: "Fonds des générations", def: "Fonds créé en 2006 pour rembourser la dette du Québec. Des revenus dédiés (loteries, redevances hydro) y sont versés chaque année. Le déficit « selon la Loi sur l'équilibre budgétaire » tient compte de ces versements." },
+    { terme: "PQI — Plan québécois des infrastructures", def: "Planification décennale des investissements publics en infrastructures : routes, hôpitaux, écoles, transport collectif. Le PQI 2025-2035 est fixé à 164 G$." },
+    { terme: "PIB — Produit intérieur brut", def: "Valeur totale de tous les biens et services produits au Québec en un an. La croissance du PIB réel mesure l'augmentation de la richesse produite, après ajustement pour l'inflation." },
+    { terme: "TVQ — Taxe de vente du Québec", def: "Taxe de 9,975 % prélevée sur la plupart des biens et services vendus au Québec. S'ajoute à la TPS fédérale de 5 % pour un total de 14,975 %." },
+    { terme: "CRIC — Crédit d'impôt R&I&C", def: "Nouveau crédit d'impôt pour la recherche, l'innovation et la commercialisation, introduit dans ce budget. Il remplace et simplifie huit mesures fiscales existantes pour les entreprises innovantes." },
+    { terme: "Minéraux critiques et stratégiques (MCS)", def: "Ressources minérales essentielles à la transition énergétique et aux technologies avancées : lithium, cobalt, graphite, nickel. Le Québec mise sur ces ressources pour attirer des investissements en filière batterie." },
+    { terme: "Loi sur l'équilibre budgétaire", def: "Loi québécoise qui oblige le gouvernement à équilibrer ses finances sur une période définie. Le déficit « selon la Loi » inclut les versements au Fonds des générations, ce qui le rend plus élevé que le déficit comptable." },
+    { terme: "Provision pour éventualités", def: "Réserve budgétaire mise de côté pour faire face aux imprévus économiques. Le budget 2025-2026 prévoit 8,5 G$ en provisions sur cinq ans, notamment en raison de l'incertitude liée aux tarifs américains." },
+    { terme: "Dette nette", def: "Total des engagements financiers du gouvernement (emprunts, obligations) moins ses actifs financiers. Exprimée en % du PIB, elle permet de comparer la soutenabilité de la dette dans le temps. Elle est à 38,7 % du PIB en 2025." },
+    { terme: "Amortissement accéléré", def: "Mesure fiscale permettant aux entreprises de déduire plus rapidement le coût d'un équipement ou d'un investissement de leurs revenus imposables, réduisant leur impôt à court terme." },
+    { terme: "SODEC", def: "Société de développement des entreprises culturelles. Organisme québécois qui soutient financièrement les entreprises de cinéma, de musique, de livre et d'autres secteurs culturels." },
+  ];
+
+  document.getElementById('grid-glossaire').innerHTML = GLOSSAIRE.map(g => `
+    <div class="glossaire-item">
+      <div class="glossaire-terme">${g.terme}</div>
+      <div class="glossaire-def">${g.def}</div>
+    </div>
+  `).join('');
+
+  // ===== MODALS =====
+  function ouvrirModal(html) {
+    document.getElementById('modal-body').innerHTML = html;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function fermerModal(e) {
+    if (!e || e.target === document.getElementById('modal-overlay')) {
+      document.getElementById('modal-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') fermerModal(); });
+
+  function ouvrirSecteur(i) {
+    const s = BUDGET.secteurs[i];
+    ouvrirModal(`
+      <span class="modal-badge">Secteur</span>
+      <h2>${s.titre}</h2>
+      <div class="modal-depenses">${s.depenses}</div>
+      <div class="modal-variation">${s.variation}</div>
+      <p>${s.resume}</p>
+      <h4>Mesures clés</h4>
+      <ul>${s.points.map(p => `<li>${p}</li>`).join('')}</ul>
+      <div class="card-tags" style="margin-top:16px;">${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <a class="modal-source" href="${SOURCE_PDF}" target="_blank">↗ Consulter le Plan budgétaire officiel (MFQ)</a>
+    `);
+  }
+
+  function ouvrirAudience(i) {
+    const a = BUDGET.audiences[i];
+    ouvrirModal(`
+      <span class="modal-badge">Pour vous</span>
+      <h2>${a.titre}</h2>
+      <p>${a.resume}</p>
+      <div class="modal-metrics">${a.mesures.map(m => `
+        <div class="modal-metric">
+          <strong>${m.valeur}</strong>
+          <span>${m.label}</span>
+          <span style="font-size:0.68rem; color:#9CA3AF; display:block; margin-top:2px;">${m.note}</span>
+        </div>`).join('')}
+      </div>
+      <div class="card-tags">${a.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <a class="modal-source" href="${SOURCE_PDF}" target="_blank">↗ Consulter le Plan budgétaire officiel (MFQ)</a>
+    `);
+  }
+
+  function ouvrirPP(i) {
+    const p = BUDGET.parties_prenantes[i];
+    ouvrirModal(`
+      <span class="modal-badge">Partie prenante</span>
+      <h2>${p.titre}</h2>
+      <p>${p.resume}</p>
+      <h4>Enjeux de représentation</h4>
+      <ul>${p.enjeux.map(e => `<li>${e}</li>`).join('')}</ul>
+      <div class="card-tags" style="margin-top:16px;">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <a class="modal-source" href="${SOURCE_PDF}" target="_blank">↗ Consulter le Plan budgétaire officiel (MFQ)</a>
+    `);
+  }
+
+  // ===== RECHERCHE =====
+  let searchTimer = null;
+  function filtrerContenu(q) {
+    if (!q) {
+      renderSecteurs(BUDGET.secteurs);
+      renderAudiences(BUDGET.audiences);
+      renderPP(BUDGET.parties_prenantes);
+      document.getElementById('search-results-info').style.display = 'none';
+      return;
+    }
+    const terme = q.toLowerCase();
+    const filterFn = item => JSON.stringify(item).toLowerCase().includes(terme);
+    const secteurs = BUDGET.secteurs.filter(filterFn);
+    const audiences = BUDGET.audiences.filter(filterFn);
+    const pp = BUDGET.parties_prenantes.filter(filterFn);
+    const total = secteurs.length + audiences.length + pp.length;
+    renderSecteurs(secteurs);
+    renderAudiences(audiences);
+    renderPP(pp);
+    const info = document.getElementById('search-results-info');
+    info.style.display = 'block';
+    info.textContent = total > 0 ? `${total} résultat${total > 1 ? 's' : ''} pour « ${q} »` : `Aucun résultat pour « ${q} »`;
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      document.getElementById('secteurs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+  }
+</script>
+</body>
+</html>    .nav-logo { font-family: var(--font-titre); font-weight: 800; font-size: 1.05rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+    .nav-logo .fleur { color: var(--or); font-size: 1.3rem; }
+    .nav-links { display: flex; gap: 2px; list-style: none; }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.7); text-decoration: none; padding: 6px 10px; border-radius: var(--r); transition: all 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(200,169,110,0.2); }
+    .nav-social { display: flex; gap: 8px; align-items: center; }
+    .nav-social a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.78rem; transition: color 0.2s; }
+    .nav-social a:hover { color: var(--or); }
+    @media (max-width: 900px) { .nav-links { display: none; } }
+
+    /* ===== HERO ===== */
+    .hero { background: var(--bleu-nuit); background-image: radial-gradient(ellipse at 80% 20%, rgba(0,93,187,0.4) 0%, transparent 60%), radial-gradient(ellipse at 10% 80%, rgba(200,169,110,0.12) 0%, transparent 50%); padding: 72px 24px 56px; text-align: center; color: white; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.03) 39px, rgba(255,255,255,0.03) 40px); pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.4); color: var(--or-pale); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 16px; border-radius: 99px; margin-bottom: 24px; }
+    .hero h1 { font-family: var(--font-titre); font-size: clamp(2rem, 6vw, 3.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .hero h1 span { color: var(--or); display: block; }
+    .hero-sub { font-size: 1rem; color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto 32px; font-weight: 300; }
+    .hero-byline { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; color: rgba(255,255,255,0.4); font-style: italic; }
+    .hero-byline strong { color: var(--or-pale); font-style: normal; font-weight: 500; }
+    .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 32px; }
+    .search-bar-wrap { max-width: 520px; margin: 0 auto 32px; }
+    .search-bar { width: 100%; padding: 13px 20px; border: 2px solid rgba(255,255,255,0.2); border-radius: var(--r-lg); background: rgba(255,255,255,0.1); color: white; font-family: var(--font-corps); font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+    .search-bar::placeholder { color: rgba(255,255,255,0.4); }
+    .search-bar:focus { border-color: var(--or); background: rgba(255,255,255,0.15); }
+
+    /* ===== CITATION MINISTRE ===== */
+    .citation-section { background: white; border-top: 3px solid var(--or); border-bottom: 1px solid var(--gris-clair); padding: 40px 24px; }
+    .citation-inner { max-width: 800px; margin: 0 auto; display: flex; gap: 28px; align-items: flex-start; }
+    .citation-guillemet { font-family: var(--font-titre); font-size: 5rem; color: var(--or); line-height: 0.7; flex-shrink: 0; margin-top: 8px; }
+    .citation-texte { font-family: var(--font-titre); font-size: 1.2rem; font-weight: 600; color: var(--bleu-nuit); line-height: 1.5; font-style: italic; }
+    .citation-auteur { margin-top: 14px; font-size: 0.82rem; color: var(--gris); font-style: normal; font-weight: 400; }
+    .citation-auteur strong { color: var(--texte); }
+
+    /* ===== TRAJECTOIRE DÉFICIT ===== */
+    .trajectoire-section { background: var(--bleu-nuit); padding: 48px 24px; }
+    .trajectoire-inner { max-width: 900px; margin: 0 auto; }
+    .trajectoire-titre { font-family: var(--font-titre); font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 8px; }
+    .trajectoire-sous-titre { font-size: 0.82rem; color: rgba(255,255,255,0.5); margin-bottom: 32px; }
+    .trajectoire-bars { display: flex; align-items: flex-end; gap: 12px; height: 160px; }
+    .traj-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .traj-bar-wrap { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; }
+    .traj-bar { width: 100%; border-radius: 4px 4px 0 0; transition: opacity 0.2s; position: relative; min-height: 8px; }
+    .traj-bar.deficit { background: linear-gradient(to top, #C0392B, #E74C3C); }
+    .traj-bar.excedent { background: linear-gradient(to top, var(--vert), #27AE60); }
+    .traj-valeur { font-family: var(--font-titre); font-size: 0.82rem; font-weight: 700; color: white; }
+    .traj-annee { font-size: 0.72rem; color: rgba(255,255,255,0.45); }
+    .traj-legende { display: flex; gap: 20px; margin-top: 20px; }
+    .traj-leg-item { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+    .traj-leg-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+    /* ===== SECTIONS ===== */
+    .section { max-width: 1280px; margin: 0 auto; padding: 56px 24px; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; gap: 16px; flex-wrap: wrap; }
+    .section-title { font-family: var(--font-titre); font-size: 1.4rem; font-weight: 700; color: var(--texte); display: flex; align-items: center; gap: 10px; }
+    .section-title .icon { width: 30px; height: 30px; background: var(--bleu); border-radius: var(--r); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: white; }
+    .section-count { font-size: 0.8rem; color: var(--gris); font-weight: 400; }
+    .divider { border: none; border-top: 1px solid var(--gris-clair); }
+
+    /* ===== CHIFFRES ===== */
+    .chiffres-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 768px) { .chiffres-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .chiffres-grid { grid-template-columns: 1fr; } }
+    .chiffre-card { background: white; border: 1px solid var(--gris-clair); border-radius: var(--r-lg); padding: 22px; transition: transform 0.2s, box-shadow 0.2s; }
+    .chiffre-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .chiffre-label { font-size: 0.78rem; font-weight: 500; color: var(--gris); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .chiffre-valeur { font-family: var(--font-titre); font-size: 1.8rem; font-weight: 800; color: var(--bleu-nuit); line-height: 1; margin-bottom: 6px; }
+    .chiffre-note { font-size: 0.78rem; color: var(--gris); margin-bottom: 10px; }
+    .variation-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; font-weight: 500; padding: 3px 8px; border-radius: 99px; }
+    .var-up { background: #ECFDF5; color: var(--vert); }
+    .var-down { background: #FEF2F2; color: var(--rouge); }
+    .var-neutral { background: #F3F4F6; color: var(--gris); }
+
+    /* ===== CARTES ARTICLES ===== */
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    @media (max-width: 900px) { .articles-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .articles-grid { grid-template-columns: 1fr; } }
+    .article-card { background: white; border: 1px solid var(--gris-clair); border-radius: var(--r-lg); padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: all 0.2s; cursor: pointer; text-decoration: none; color: inherit; }
+    .article-card:hover { border-color: var(--bleu-clair); box-shadow: 0 4px 20px rgba(0,61,165,0.08); transform: translateY(-2px); }
+    .card-top { display: flex; align-items: center; justify-content: space-between; }
+    .priorite-badge { font-size: 0.68rem; font-weight: 600; padding: 3px 8px; border-radius: 99px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .p-haute { background: #EFF6FF; color: var(--bleu); }
+    .p-moyenne { background: #F0FDF4; color: #166534; }
+    .card-metric { font-size: 0.7rem; color: var(--gris); text-align: right; }
+    .card-metric strong { font-family: var(--font-titre); font-size: 0.95rem; font-weight: 700; color: var(--texte); display: block; }
+    .article-card h3 { font-family: var(--font-titre); font-size: 0.95rem; font-weight: 700; line-height: 1.35; }
+    .article-card p { font-size: 0.83rem; color: var(--gris); line-height: 1.55; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+    .card-footer { margin-top: auto; display: flex; align-items: center; justify-content: space-between; }
+    .source-link { font-size: 0.72rem; color: var(--bleu); text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
+    .source-link:hover { opacity: 1; }
+    .tag { font-size: 0.68rem; color: var(--gris); background: var(--gris-clair); padding: 2px 7px; border-radius: 99px; }
+
+    /* ===== GLOSSAIRE ===== */
+    .glossaire-section { background: white; }
+    .glossaire-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    @media (max-width: 700px) { .glossaire-grid { grid-template-columns: 1fr; } }
+    .glossaire-item { background: var(--blanc); border: 1px solid var(--gris-clair); border-left: 3px solid var(--bleu); border-radius: var(--r); padding: 18px 20px; }
+    .glossaire-terme { font-family: var(--font-titre); font-size: 0.9rem; font-weight: 700; color: var(--bleu-nuit); margin-bottom: 6px; }
+    .glossaire-def { font-size: 0.83rem; color: #4B5563; line-height: 1.6; }
+
+    /* ===== SUBSTACK ===== */
+    .substack-section { background: linear-gradient(135deg, #F8F3E8 0%, #FDF9F0 100%); border-top: 1px solid var(--or-pale); border-bottom: 1px solid var(--or-pale); padding: 48px 24px; text-align: center; }
+    .substack-inner { max-width: 560px; margin: 0 auto; }
+    .substack-section h2 { font-family: var(--font-titre); font-size: 1.5rem; font-weight: 800; color: var(--bleu-nuit); margin-bottom: 10px; }
+    .substack-section p { font-size: 0.92rem; color: var(--gris); margin-bottom: 24px; line-height: 1.6; }
+    .substack-form { display: flex; gap: 10px; max-width: 440px; margin: 0 auto; }
+    .substack-input { flex: 1; padding: 12px 16px; border: 2px solid var(--gris-clair); border-radius: var(--r); font-family: var(--font-corps); font-size: 0.9rem; outline: none; transition: border-color 0.2s; background: white; }
+    .substack-input:focus { border-color: var(--bleu); }
+    .substack-btn { padding: 12px 20px; background: var(--bleu-nuit); color: white; border: none; border-radius: var(--r); font-family: var(--font-corps); font-weight: 600; font-size: 0.88rem; cursor: pointer; white-space: nowrap; transition: background 0.2s; text-decoration: none; display: inline-flex; align-items: center; }
+    .substack-btn:hover { background: var(--bleu); }
+    .substack-note { font-size: 0.75rem; color: var(--gris); margin-top: 12px; }
+    @media (max-width: 480px) { .substack-form { flex-direction: column; } }
+
+    /* ===== À PROPOS ===== */
+    .apropos-section { background: white; padding: 56px 24px; }
+    .apropos-inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: 1fr 2fr; gap: 48px; align-items: start; }
+    @media (max-width: 640px) { .apropos-inner { grid-template-columns: 1fr; } }
+    .apropos-id { text-align: center; }
+    .apropos-avatar { width: 80px; height: 80px; background: var(--bleu-nuit); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-titre); font-size: 1.8rem; font-weight: 800; color: var(--or); margin: 0 auto 16px; }
+    .apropos-nom { font-family: var(--font-titre); font-weight: 800; font-size: 1.1rem; color: var(--bleu-nuit); }
+    .apropos-titre-poste { font-size: 0.82rem; color: var(--gris); margin-bottom: 16px; }
+    .apropos-liens { display: flex; flex-direction: column; gap: 8px; }
+    .apropos-lien { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--bleu); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .apropos-lien:hover { color: var(--bleu-nuit); }
+    .apropos-contenu h3 { font-family: var(--font-titre); font-size: 1.3rem; font-weight: 800; color: var(--bleu-nuit); margin-bottom: 14px; }
+    .apropos-contenu p { font-size: 0.9rem; color: #4B5563; line-height: 1.7; margin-bottom: 14px; }
+    .apropos-contenu p:last-child { margin-bottom: 0; }
+    .aucoin-link { color: var(--bleu); text-decoration: none; font-weight: 500; }
+    .aucoin-link:hover { text-decoration: underline; }
+
+    /* ===== NOTE IA ===== */
+    .ia-note { background: linear-gradient(135deg, var(--bleu-nuit) 0%, var(--bleu) 100%); color: white; padding: 48px 24px; text-align: center; }
+    .ia-note-inner { max-width: 700px; margin: 0 auto; }
+    .ia-note h2 { font-family: var(--font-titre); font-size: 1.5rem; font-weight: 800; margin-bottom: 14px; }
+    .ia-note p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 16px; }
+    .outils-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+    .outil-pill { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.9); font-size: 0.78rem; font-weight: 500; padding: 5px 12px; border-radius: 99px; }
+
+    /* ===== COMPARAISON ===== */
+    .compare-table { width: 100%; border-collapse: collapse; }
+    .compare-table th { font-family: var(--font-titre); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gris); padding: 12px 16px; background: var(--blanc); border-bottom: 2px solid var(--gris-clair); text-align: left; }
+    .compare-table td { padding: 13px 16px; border-bottom: 1px solid var(--gris-clair); font-size: 0.88rem; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table tr:hover td { background: #F9F8F6; }
+    .diff-up { color: var(--vert); font-weight: 600; }
+    .diff-down { color: var(--rouge); font-weight: 600; }
+
+    /* ===== FOOTER ===== */
+    footer { background: var(--bleu-nuit); color: rgba(255,255,255,0.45); padding: 32px 24px; border-top: 1px solid rgba(200,169,110,0.3); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .footer-left { font-size: 0.78rem; line-height: 1.7; }
+    .footer-left strong { color: var(--or-pale); }
+    .footer-social { display: flex; gap: 14px; }
+    .footer-social a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; font-weight: 500; transition: color 0.2s; display: flex; align-items: center; gap: 5px; }
+    .footer-social a:hover { color: var(--or); }
+
+    /* ===== MODAL ===== */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,15,40,0.75); z-index: 1000; backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: white; border-radius: 16px; max-width: 680px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 36px; position: relative; animation: modalIn 0.25s ease; }
+    @keyframes modalIn { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .modal-close { position: absolute; top: 14px; right: 14px; background: var(--gris-clair); border: none; width: 30px; height: 30px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .modal-close:hover { background: #d1cdc8; }
+    .modal-badge { display: inline-block; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--bleu); background: #EFF6FF; padding: 3px 10px; border-radius: 99px; margin-bottom: 12px; }
+    .modal h2 { font-family: var(--font-titre); font-size: 1.5rem; font-weight: 800; color: var(--bleu-nuit); margin-bottom: 6px; line-height: 1.2; }
+    .modal-depenses { font-family: var(--font-titre); font-size: 1.8rem; font-weight: 800; color: var(--bleu); margin-bottom: 4px; }
+    .modal-variation { font-size: 0.8rem; color: var(--gris); margin-bottom: 18px; }
+    .modal p { font-size: 0.92rem; color: #4B5563; line-height: 1.65; margin-bottom: 18px; }
+    .modal h4 { font-family: var(--font-titre); font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--texte); margin-bottom: 10px; }
+    .modal ul { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .modal ul li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: #374151; }
+    .modal ul li::before { content: '◆'; color: var(--or); flex-shrink: 0; margin-top: 3px; font-size: 0.65rem; }
+    .modal-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+    .modal-metric { background: var(--blanc); border: 1px solid var(--gris-clair); border-radius: var(--r); padding: 12px; text-align: center; }
+    .modal-metric strong { display: block; font-family: var(--font-titre); font-size: 1rem; font-weight: 700; color: var(--bleu-nuit); }
+    .modal-metric span { font-size: 0.72rem; color: var(--gris); }
+    .modal-source { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--bleu); text-decoration: none; margin-top: 4px; opacity: 0.8; }
+    .modal-source:hover { opacity: 1; }
+
+    /* ===== BOUTONS ===== */
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: var(--r); font-family: var(--font-corps); font-weight: 500; font-size: 0.88rem; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; }
+    .btn-primary { background: var(--or); color: var(--bleu-nuit); }
+    .btn-primary:hover { background: var(--or-pale); }
+    .btn-outline { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.85); }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+
+    /* ===== PRINT ===== */
+    @media print {
+      nav, .hero-ctas, .search-bar-wrap, .substack-section, footer, .modal-overlay, .trajectoire-section { display: none !important; }
+      .hero { padding: 20px; background: white !important; color: var(--bleu-nuit) !important; }
+      .hero h1, .hero-sub, .hero-byline { color: var(--bleu-nuit) !important; }
+      .chiffre-card, .article-card, .glossaire-item { break-inside: avoid; border: 1px solid #ccc; }
+      body { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo"><span class="fleur">⚜</span> Budget Québec</a>
+    <ul class="nav-links">
+      <li><a href="#chiffres">Vue d'ensemble</a></li>
+      <li><a href="#secteurs">Secteurs</a></li>
+      <li><a href="#audiences">Pour vous</a></li>
+      <li><a href="#parties-prenantes">Parties prenantes</a></li>
+      <li><a href="#glossaire">Glossaire</a></li>
+      <li><a href="#apropos">À propos</a></li>
+    </ul>
+    <div class="nav-social">
+      <a href="https://kimleclerc.substack.com/" target="_blank">✉ Substack</a>
+      <a href="https://x.com/kimleclerc" target="_blank">𝕏</a>
+      <a href="https://www.linkedin.com/in/kimleclerc/" target="_blank">in</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">⚜ Analyse indépendante · Budget <span id="hero-annee"></span></div>
+  <h1>Budget Québec<span id="hero-titre-annee"></span></h1>
+  <p class="hero-sub">Décortiqué, analysé, rendu accessible.<br>Avec l'aide d'outils d'intelligence artificielle spécialisés.</p>
+  <div class="search-bar-wrap">
+    <input class="search-bar" type="text" id="recherche" placeholder="Rechercher un secteur, une mesure, un terme…" oninput="filtrerContenu(this.value)">
+    <div id="search-results-info" style="display:none; margin-top:10px; font-size:0.8rem; color:rgba(255,255,255,0.6); text-align:center;"></div>
+  </div>
+  <div class="hero-byline">
+    Analyse préparée avec l'aide d'outils IA spécialisés ·
+    <strong>Kim Leclerc, AUCOIN Stratégie & Communication</strong>
+  </div>
+  <div class="hero-ctas">
+    <a href="#secteurs" class="btn btn-primary">Analyser par secteur</a>
+    <a href="#audiences" class="btn btn-outline">Et pour moi, concrètement?</a>
+  </div>
+</section>
+
+<!-- CITATION MINISTRE -->
+<div class="citation-section">
+  <div class="citation-inner">
+    <div class="citation-guillemet">"</div>
+    <div>
+      <div class="citation-texte">Nous faisons le choix d'un Québec moderne, ouvert sur le monde et tourné vers l'avenir. Nous faisons le choix d'un Québec fort!</div>
+      <div class="citation-auteur"><strong>Eric Girard</strong> — Ministre des Finances du Québec, 25 mars 2025</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRAJECTOIRE DÉFICIT -->
+<div class="trajectoire-section">
+  <div class="trajectoire-inner">
+    <div class="trajectoire-titre">Trajectoire vers l'équilibre budgétaire</div>
+    <div class="trajectoire-sous-titre">Solde comptable (avant versements au Fonds des générations) · en milliards de dollars</div>
+    <div class="trajectoire-bars" id="traj-bars"></div>
+    <div class="traj-legende">
+      <div class="traj-leg-item"><div class="traj-leg-dot" style="background:#E74C3C;"></div> Déficit</div>
+      <div class="traj-leg-item"><div class="traj-leg-dot" style="background:#27AE60;"></div> Excédent</div>
+      <div class="traj-leg-item" style="color:rgba(255,255,255,0.35); font-style:italic;">· Projections à partir de 2025-2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHIFFRES CLÉS -->
+<div class="section" id="chiffres">
+  <div class="section-header">
+    <h2 class="section-title"><span class="icon">◈</span> Budget en chiffres <span class="section-count" id="count-chiffres"></span></h2>
+  </div>
+  <div class="chiffres-grid" id="grid-chiffres"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- SECTEURS -->
+<div class="section" id="secteurs">
+  <div class="section-header">
+    <h2 class="section-title"><span class="icon">■</span> Par secteur <span class="section-count" id="count-secteurs"></span></h2>
+  </div>
+  <div class="articles-grid" id="grid-secteurs"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- AUDIENCES -->
+<div class="section" id="audiences">
+  <div class="section-header">
+    <h2 class="section-title"><span class="icon">●</span> Et pour vous, concrètement? <span class="section-count" id="count-audiences"></span></h2>
+  </div>
+  <div class="articles-grid" id="grid-audiences"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- PARTIES PRENANTES -->
+<div class="section" id="parties-prenantes">
+  <div class="section-header">
+    <h2 class="section-title"><span class="icon">▲</span> Notes pour parties prenantes <span class="section-count" id="count-pp"></span></h2>
+  </div>
+  <div class="articles-grid" id="grid-pp"></div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- COMPARAISON -->
+<div class="section" id="comparaison">
+  <div class="section-header">
+    <h2 class="section-title"><span class="icon">◆</span> Comparaison année précédente</h2>
+  </div>
+  <div style="background:white; border:1px solid var(--gris-clair); border-radius: var(--r-lg); overflow:hidden;">
+    <table class="compare-table" id="table-comparaison"></table>
+  </div>
+</div>
+
+<hr class="divider" style="max-width:1280px;margin:0 auto;">
+
+<!-- GLOSSAIRE -->
+<div class="section glossaire-section" id="glossaire">
+  <div class="section-header">
+    <h2 class="section-title"><span class="icon">?</span> Glossaire budgétaire</h2>
+  </div>
+  <div class="glossaire-grid" id="grid-glossaire"></div>
+</div>
+
+<!-- SUBSTACK -->
+<div class="substack-section">
+  <div class="substack-inner">
+    <h2>📬 Recevez l'analyse du budget 2026-2027</h2>
+    <p>Mercredi 19 mars à 16h, le nouveau budget sera déposé. Abonnez-vous sur Substack pour recevoir l'analyse dès que les documents officiels sont disponibles.</p>
+    <a href="https://kimleclerc.substack.com/" target="_blank" class="substack-btn">S'abonner sur Substack →</a>
+    <div class="substack-note">Analyse indépendante · Aucune publicité · Kim Leclerc</div>
+  </div>
+</div>
+
+<!-- NOTE IA -->
+<section class="ia-note">
+  <div class="ia-note-inner">
+    <h2>Une analyse augmentée par l'IA</h2>
+    <p>Ce site est une démarche personnelle de décryptage des finances publiques québécoises. Les fiches d'analyse ont été générées avec l'aide d'outils d'intelligence artificielle à partir des documents budgétaires officiels du gouvernement du Québec. L'interprétation, le cadrage stratégique et la mise en contexte sont le fruit d'un travail humain.</p>
+    <p style="font-size:0.78rem; color:rgba(255,255,255,0.35);">Ce site n'est pas affilié au gouvernement du Québec ni à aucun parti politique.</p>
+    <div class="outils-grid">
+      <span class="outil-pill">Claude (Anthropic)</span>
+      <span class="outil-pill">Analyse de documents PDF</span>
+      <span class="outil-pill">Synthèse sectorielle</span>
+      <span class="outil-pill">Données officielles MFQ</span>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<div class="apropos-section" id="apropos">
+  <div class="apropos-inner">
+    <div class="apropos-id">
+      <div class="apropos-avatar">KL</div>
+      <div class="apropos-nom">Kim Leclerc</div>
+      <div class="apropos-titre-poste">Conseiller principal<br>AUCOIN Stratégie & Communication</div>
+      <div class="apropos-liens">
+        <a href="https://www.linkedin.com/in/kimleclerc/" target="_blank" class="apropos-lien">
+          <span>in</span> LinkedIn
+        </a>
+        <a href="https://x.com/kimleclerc" target="_blank" class="apropos-lien">
+          <span>𝕏</span> @kimleclerc
+        </a>
+        <a href="https://kimleclerc.substack.com/" target="_blank" class="apropos-lien">
+          <span>✉</span> Substack
+        </a>
+        <a href="https://www.aucoinstrategie.com/" target="_blank" class="apropos-lien">
+          <span>↗</span> aucoin.ca
+        </a>
+      </div>
+    </div>
+    <div class="apropos-contenu">
+      <h3>Pourquoi ce site?</h3>
+      <p>Le budget du Québec est un document de plusieurs centaines de pages, publié une fois par an, qui touche à tout — la santé, l'éducation, les entreprises, les régions, la dette. Pourtant, il est rarement décortiqué de façon accessible, sectorielle et stratégique pour les non-spécialistes.</p>
+      <p>Ce site est une initiative personnelle pour démocratiser la compréhension des finances publiques québécoises, en utilisant des outils d'intelligence artificielle pour analyser rapidement les documents officiels du ministère des Finances et en produire des fiches lisibles par tous.</p>
+      <p>Je suis conseiller principal chez <a href="https://www.aucoinstrategie.com/" target="_blank" class="aucoin-link">AUCOIN Stratégie & Communication</a>, spécialisé en affaires publiques, relations gouvernementales et communications stratégiques. Ce site reflète mon point de vue indépendant, pas celui de mes clients.</p>
     </div>
   </div>
 </div>
