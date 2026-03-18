@@ -109,14 +109,6 @@
 
 <script>
 const WORKER_URL = 'https://frosty-credit-453d.hrfzy8bzry.workers.dev';
-const PDF_BREF = 'https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_BudgetEnBref.pdf';
-
-const SYSTEM = `Tu es un expert en finances publiques québécoises. Tu analyses le Budget du Québec 2025-2026 déposé le 25 mars 2025 par Eric Girard.
-- Réponds uniquement en français, clairement et de façon accessible
-- Base-toi uniquement sur les documents budgétaires fournis
-- Cite les chiffres précis (G$, M$, %)
-- Si une info n'est pas dans les documents, dis-le
-- Sois concis: 2-4 paragraphes max`;
 
 let history = [];
 let loading = false;
@@ -162,26 +154,10 @@ async function send() {
   addTyping();
 
   try {
-    const body = {
-      system_instruction: { parts: [{ text: SYSTEM }] },
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            { file_data: { mime_type: 'application/pdf', file_uri: PDF_BREF } },
-            { text: 'Voici le Budget en bref 2025-2026 du Québec.' }
-          ]
-        },
-        { role: 'model', parts: [{ text: 'Document reçu. Prêt à répondre.' }] },
-        ...history
-      ],
-      generationConfig: { temperature: 0.15, maxOutputTokens: 1024 }
-    };
-
     const res = await fetch(WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify({ question: q, history: history })
     });
 
     const data = await res.json();
@@ -190,7 +166,7 @@ async function send() {
     if (data.error) throw new Error(data.error.message);
 
     const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Désolé, pas de réponse. Réessayez.';
-    history.push({ role: 'model', parts: [{ text: reply }] });
+    // Worker manages context
     addMsg(reply, 'ai');
 
   } catch(e) {
