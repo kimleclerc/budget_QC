@@ -193,6 +193,86 @@ const BUDGET = {
       ],
       tags: ["fiscalité", "TVQ", "crédits-impôt", "simplification", "équité-fiscale"]
     },
+    {
+      id: "transports-mobilite",
+      titre: "Transports et mobilité durable",
+      depenses: "~3,3 G$ (dépenses de programmes) + part du PQI 164 G$",
+      variation: "Portefeuille en légère baisse vs 2024-2025",
+      priorite: "haute",
+      resume: "Le budget maintient les investissements en transport collectif et routier tout en confirmant le PQI de 164 G$ sur 10 ans. Une aide ponctuelle de 250 M$ est accordée aux municipalités pour leurs réseaux de transport, malgré des pressions financières importantes sur les sociétés de transport.",
+      points: [
+        "250 M$ ponctuels aux municipalités pour soutenir les réseaux de transport en commun (métro, autobus, RTC, STM, RTL, etc.)",
+        "Fonds des réseaux de transport terrestre : financement de la voirie locale et des infrastructures routières",
+        "PQI 2025-2035 : 164 G$ sur 10 ans incluant routes, ponts, viaducs et transport collectif",
+        "Électrification des transports : incluse dans les 636 M$ pour les collectivités et changements climatiques",
+        "Poursuite des grands projets structurants : REM, prolongements de métro, réseau express métropolitain",
+      ],
+      tags: ["transport", "mobilité", "transport-en-commun", "routes", "PQI", "municipalités"]
+    },
+    {
+      id: "logement-habitation",
+      titre: "Logement et habitation",
+      depenses: "Inclus dans 550 M$ personnes vulnérables + Affaires municipales",
+      variation: "Enjeu prioritaire face à la crise du logement",
+      priorite: "haute",
+      resume: "Le budget aborde le logement principalement sous l'angle social et de la vulnérabilité. Des investissements sont prévus pour le logement abordable, mais le secteur demeure sous-financé face à l'ampleur de la crise, notamment dans les grands centres urbains.",
+      points: [
+        "Soutien au logement abordable : inclus dans l'enveloppe de 550 M$ pour les personnes vulnérables",
+        "Programme AccèsLogis : poursuite du financement pour les coopératives et OBNL d'habitation",
+        "Protection contre les inondations et sécurité des infrastructures résidentielles",
+        "Aide aux municipalités pour l'habitation via les transferts du pacte fiscal",
+        "Enjeu non résolu : la pénurie de logements abordables dans les grands centres demeure critique",
+      ],
+      tags: ["logement", "habitation", "loyer", "logement-abordable", "AccèsLogis"]
+    },
+    {
+      id: "agriculture-bioalimentaire",
+      titre: "Agriculture, pêcheries et bioalimentaire",
+      depenses: "Plus de 1 G$ sur 5 ans (Politique bioalimentaire 2025-2035)",
+      variation: "Nouveau cadre stratégique 2025-2035",
+      priorite: "moyenne",
+      resume: "Le budget lance la Politique bioalimentaire 2025-2035 avec une enveloppe de plus de 1 G$ sur cinq ans, poursuit le Plan d'agriculture durable 2020-2030 et investit dans la transformation et l'innovation agroalimentaire pour renforcer la souveraineté alimentaire du Québec.",
+      points: [
+        "Politique bioalimentaire 2025-2035 : plus de 1 G$ sur cinq ans pour l'ensemble de la chaîne alimentaire",
+        "Poursuite du Plan d'agriculture durable 2020-2030 : pratiques agricoles respectueuses de l'environnement",
+        "Soutien à l'innovation et à la transformation des produits alimentaires québécois",
+        "202 M$ sur 5 ans pour le développement du secteur bioalimentaire",
+        "Financement de l'organisme Les Produits du Québec pour faciliter l'identification des aliments d'ici",
+      ],
+      tags: ["agriculture", "bioalimentaire", "alimentation", "pêcheries", "régions"]
+    },
+    {
+      id: "justice-securite-publique",
+      titre: "Justice et sécurité publique",
+      depenses: "~208 M$ (dans l'enveloppe collectivités 636 M$)",
+      variation: "Nouvelle stratégie de lutte contre la criminalité",
+      priorite: "moyenne",
+      resume: "Le budget déploie une Stratégie québécoise de lutte contre la criminalité avec des mesures ciblées pour renforcer les corps policiers, les tribunaux et la sécurité civile, dans un contexte de hausse des cybercrimes et du crime organisé.",
+      points: [
+        "Stratégie québécoise de lutte contre la criminalité : nouvelles équipes spécialisées",
+        "Renforcement des ressources en cybersécurité et lutte contre le crime organisé",
+        "Soutien aux tribunaux pour réduire les délais judiciaires",
+        "Sécurité civile : mesures d'adaptation aux risques climatiques (inondations, feux de forêt)",
+        "Services correctionnels : maintien des ressources pour la réhabilitation",
+      ],
+      tags: ["justice", "sécurité-publique", "criminalité", "police", "cybersécurité"]
+    },
+    {
+      id: "enseignement-superieur",
+      titre: "Enseignement supérieur",
+      depenses: "Inclus dans 1,1 G$ éducation-jeunesse (sur 5 ans)",
+      variation: "Accent sur la formation professionnelle et technique",
+      priorite: "moyenne",
+      resume: "L'enseignement supérieur bénéficie d'investissements en infrastructures pour les cégeps et universités, de soutien accru aux étudiants et d'une expansion de la formation professionnelle pour répondre aux besoins criants du marché du travail québécois.",
+      points: [
+        "Consolidation de l'aide financière aux études (AFE) pour les étudiants à faibles revenus",
+        "Infrastructures cégeps et universités : rénovations et nouvelles constructions incluses au PQI",
+        "Expansion de la formation professionnelle : réponse à la pénurie de main-d'œuvre spécialisée",
+        "Offensive formation en construction : partenariats université-industrie pour les secteurs stratégiques",
+        "Soutien aux étudiants internationaux francophiles pour favoriser l'immigration qualifiée",
+      ],
+      tags: ["enseignement-supérieur", "cégep", "université", "étudiants", "formation-professionnelle"]
+    },
   ],
 
   audiences: [
@@ -291,6 +371,42 @@ const BUDGET = {
         { label: "Enveloppe culture et identité", valeur: "717 M$", note: "Sur 5 ans" },
       ],
       tags: ["culture", "arts", "SODEC", "patrimoine", "identité"]
+    },
+    {
+      id: "usagers-transport",
+      titre: "Usagers du transport en commun",
+      priorite: "haute",
+      resume: "Les usagers du transport en commun bénéficient de 250 M$ ponctuels aux sociétés de transport, mais font face à des pressions tarifaires importantes alors que les grandes métropoles cherchent à équilibrer leurs budgets.",
+      mesures: [
+        { label: "Aide ponctuelle aux sociétés de transport", valeur: "250 M$", note: "Via les municipalités" },
+        { label: "Projets structurants (REM, métro)", valeur: "Maintenus", note: "Inclus au PQI 164 G$" },
+        { label: "Électrification des transports", valeur: "Inclus", note: "Dans l'enveloppe climat" },
+      ],
+      tags: ["transport-en-commun", "métro", "autobus", "REM", "mobilité"]
+    },
+    {
+      id: "etudiants",
+      titre: "Étudiants",
+      priorite: "moyenne",
+      resume: "Les étudiants bénéficient d'une consolidation de l'aide financière aux études, d'investissements en infrastructures scolaires et d'une expansion de la formation professionnelle, dans un contexte de hausse du coût de la vie.",
+      mesures: [
+        { label: "Aide financière aux études (AFE)", valeur: "Consolidée", note: "Maintien du programme" },
+        { label: "Infrastructures cégeps/universités", valeur: "Inclus au PQI", note: "Rénovations et constructions" },
+        { label: "Formation professionnelle", valeur: "Expansion", note: "Réponse à la pénurie main-d'œuvre" },
+      ],
+      tags: ["étudiants", "cégep", "université", "AFE", "formation"]
+    },
+    {
+      id: "locataires",
+      titre: "Locataires",
+      priorite: "haute",
+      resume: "Les locataires font face à une crise du logement persistante. Le budget prévoit un soutien via les programmes de logement social, mais l'ampleur des besoins dépasse largement les investissements annoncés dans les grands centres urbains.",
+      mesures: [
+        { label: "Logement abordable (AccèsLogis)", valeur: "Inclus dans 550 M$", note: "Pour personnes vulnérables" },
+        { label: "Protection contre les reprises abusives", valeur: "Mesures maintenues", note: "Via le Tribunal du logement" },
+        { label: "Aide aux sans-abri", valeur: "Soutien maintenu", note: "Services communautaires" },
+      ],
+      tags: ["locataires", "logement", "loyer", "logement-abordable", "crise-logement"]
     },
   ],
 
