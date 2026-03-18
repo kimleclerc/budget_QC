@@ -14,17 +14,17 @@ const BUDGET = {
 
   chiffres: [
     {
-      label: "Déficit comptable 2026-2027",
-      valeur: "-6,3 G$",
-      note: "Révisé à la baisse de 861 M$ vs mars 2025 · 0,9 % du PIB",
-      variation: "Amélioration vs -7,7 G$ en 2025-2026",
+      label: "Déficit 2026-2027 (Loi équilibre budgétaire)",
+      valeur: "-8,6 G$",
+      note: "Après versements au Fonds des générations · chiffre cité dans les médias",
+      variation: "Amélioration vs -9,9 G$ en 2025-2026",
       direction: "up"
     },
     {
-      label: "Déficit 2025-2026 révisé",
-      valeur: "-7,7 G$",
-      note: "Révisé à la baisse de 3,8 G$ vs prévisions mars 2025 · 1,2 % du PIB",
-      variation: "Meilleure que prévu — bonne gestion des dépenses",
+      label: "Déficit comptable 2026-2027",
+      valeur: "-6,3 G$",
+      note: "Avant versements au Fonds des générations · 0,9 % du PIB",
+      variation: "Révisé à la baisse de 861 M$ vs mars 2025",
       direction: "up"
     },
     {
@@ -272,13 +272,15 @@ const BUDGET = {
       priorite: "haute",
       resume: "La bonne nouvelle : le déficit 2025-2026 est révisé à -7,7 G$ (vs -11,4 G$ prévu). C'est une amélioration de 3,8 G$ grâce à une meilleure gestion des dépenses et une croissance du PIB nominal plus forte que prévu. La trajectoire vers l'équilibre en 2029-2030 est maintenue. Le Québec affiche un des déficits les plus bas en proportion du PIB au Canada (-1,2 %).",
       points: [
-        "Déficit 2025-2026 révisé à -7,7 G$ (1,2 % du PIB) — amélioration de 3,8 G$ vs mars 2025",
-        "Déficit 2026-2027 prévu à -6,3 G$ (0,9 % du PIB) — amélioration de 861 M$ vs mars 2025",
-        "Retour à l'équilibre maintenu pour 2029-2030",
-        "Provision pour éventualités : 8,0 G$ sur cinq ans (vs 8,5 G$ l'an dernier)",
+        "Déficit 2026-2027 : -8,6 G$ selon Loi sur l'équilibre budgétaire / -6,3 G$ comptable (0,9 % du PIB)",
+        "Déficit 2025-2026 révisé à -9,9 G$ (Loi) / -7,7 G$ (comptable) — amélioration de ~3,7 G$ vs prévisions mars 2025",
+        "Trajectoire Loi : -9,9 G$ (25-26) → -8,6 G$ (26-27) → -5,7 G$ (27-28) → -1,5 G$ (28-29) → +0,4 G$ (29-30)",
+        "Retour à l'équilibre maintenu pour 2029-2030 — trajectoire confirmée",
+        "Provision pour éventualités : 8,0 G$ sur cinq ans · Écarts à résorber : 750 M$ en 27-28, ~2 G$/an ensuite",
         "Québec parmi les provinces avec le déficit le plus bas en % du PIB (-1,2 % vs moyenne -1,7 %)",
         "PIB réel : 0,8 % en 2025, 1,1 % en 2026, 1,4 % en 2027",
         "Pouvoir d'achat 2018-2024 : +9,2 % au Québec vs +5,1 % en Ontario",
+        "Note importante : les écarts à résorber (~2 G$/an après 27-28) ont fait sourciller le vérificateur général",
       ],
       tags: ["finances-publiques", "déficit", "dette", "PIB", "équilibre-budgétaire", "trajectoire"]
     },
@@ -527,8 +529,9 @@ const BUDGET = {
   comparaison: {
     annee_precedente: "2025-2026",
     elements: [
+      { label: "Déficit (Loi équilibre budgétaire)", avant: "-13,6 G$ (prévu)", apres: "-8,6 G$", direction: "up" },
       { label: "Déficit comptable", avant: "-11,4 G$ (prévu)", apres: "-6,3 G$", direction: "up" },
-      { label: "Déficit 2025-2026 révisé", avant: "-11,4 G$ (prévu mars 2025)", apres: "-7,7 G$ (révisé)", direction: "up" },
+      { label: "Déficit 2025-2026 révisé (Loi)", avant: "-13,6 G$ (mars 2025)", apres: "-9,9 G$ (révisé)", direction: "up" },
       { label: "Nouvelles initiatives (5 ans)", avant: "12,3 G$", apres: "9,6 G$", direction: "down" },
       { label: "PIB réel (croissance)", avant: "1,1 %", apres: "1,1 % (2026)", direction: "neutral" },
       { label: "PQI", avant: "164 G$ (2025-2035)", apres: "167 G$ (2026-2036)", direction: "up" },
