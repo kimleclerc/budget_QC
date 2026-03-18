@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Budget Québec 2025-2026 — Analyse indépendante · Kim Leclerc</title>
-  <meta name="description" content="Analyse indépendante du Budget du Québec 2025-2026. Décortiqué avec l'aide d'outils IA spécialisés par Kim Leclerc, AUCOIN Stratégie & Communication.">
+  <title>Budget Québec 2026-2027 — Analyse indépendante · Kim Leclerc</title>
+  <meta name="description" content="Analyse indépendante du Budget du Québec 2026-2027. Décortiqué avec l'aide d'outils IA spécialisés par Kim Leclerc, AUCOIN Stratégie & Communication.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
@@ -280,8 +280,8 @@
   <div class="citation-inner">
     <div class="citation-guillemet">"</div>
     <div>
-      <div class="citation-texte">Nous faisons le choix d'un Québec moderne, ouvert sur le monde et tourné vers l'avenir. Nous faisons le choix d'un Québec fort!</div>
-      <div class="citation-auteur"><strong>Eric Girard</strong> — Ministre des Finances du Québec, 25 mars 2025</div>
+      <div class="citation-texte">Dans le contexte d'incertitude économique et géopolitique actuel, les Québécois restent et resteront toujours notre priorité. À travers toutes les turbulences que nous vivons, notre économie progresse, nos finances publiques se portent mieux et le Québec a toutes les raisons d'être optimiste face à l'avenir.</div>
+      <div class="citation-auteur"><strong>Eric Girard</strong> — Ministre des Finances du Québec, 18 mars 2026</div>
     </div>
   </div>
 </div>
@@ -290,7 +290,7 @@
 <div class="trajectoire-section">
   <div class="trajectoire-inner">
     <div class="trajectoire-titre">Trajectoire vers l'équilibre budgétaire</div>
-    <div class="trajectoire-sous-titre">Solde comptable (avant versements au Fonds des générations) · en milliards de dollars</div>
+    <div class="trajectoire-sous-titre">Solde comptable prévu · en milliards de dollars · Budget 2026-2027</div>
     <div class="trajectoire-bars" id="traj-bars"></div>
     <div class="traj-legende">
       <div class="traj-leg-item"><div class="traj-leg-dot" style="background:#E74C3C;"></div> Déficit</div>
@@ -363,8 +363,8 @@
 <!-- SUBSTACK -->
 <div class="substack-section">
   <div class="substack-inner">
-    <h2>📬 Recevez l'analyse du budget 2026-2027</h2>
-    <p>Mercredi 19 mars à 16h, le nouveau budget sera déposé. Abonnez-vous sur Substack pour recevoir l'analyse dès que les documents officiels sont disponibles.</p>
+    <h2>📬 Restez informé — analyses des finances publiques québécoises</h2>
+    <p>Le Budget 2026-2027 a été déposé le 18 mars 2026. Abonnez-vous sur Substack pour recevoir les prochaines analyses des finances publiques québécoises.</p>
     <a href="https://kimleclerc.substack.com/" target="_blank" class="substack-btn">S'abonner sur Substack →</a>
     <div class="substack-note">Analyse indépendante · Aucune publicité · Kim Leclerc</div>
   </div>
@@ -422,8 +422,8 @@
       <p>Je suis conseiller principal chez <a href="https://www.aucoinstrategie.com/" target="_blank" class="aucoin-link">AUCOIN Stratégie & Communication</a>, spécialisé en affaires publiques, relations gouvernementales et communications stratégiques. Ce site reflète mon point de vue indépendant, pas celui de mes clients.</p>
       <p style="font-size:0.82rem; color:var(--gris); border-top:1px solid var(--gris-clair); padding-top:14px; margin-top:4px;">
         Sources officielles : 
-        <a href="https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_PlanBudgetaire.pdf" target="_blank" class="aucoin-link">Plan budgétaire 2025-2026</a> · 
-        <a href="https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_BudgetEnBref.pdf" target="_blank" class="aucoin-link">Budget en bref</a> · 
+        <a href="https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2627_PlanBudgetaire.pdf" target="_blank" class="aucoin-link">Plan budgétaire 2025-2026</a> · 
+        <a href="https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2627_BudgetEnBref.pdf" target="_blank" class="aucoin-link">Budget en bref</a> · 
         Ministère des Finances du Québec
       </p>
     </div>
@@ -437,7 +437,7 @@
     <div class="footer-left">
       <strong>Budget Québec — Analyse indépendante</strong><br>
       Kim Leclerc · AUCOIN Stratégie & Communication<br>
-      Données : ministère des Finances du Québec · Budget 2025-2026
+      Données : ministère des Finances du Québec · Budget 2026-2027
     </div>
     <div class="footer-social">
       <a href="https://kimleclerc.substack.com/" target="_blank">✉ Substack</a>
@@ -458,7 +458,7 @@
 
 <script src="data/budget.js"></script>
 <script>
-  const SOURCE_PDF = "https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2526_PlanBudgetaire.pdf";
+  const SOURCE_PDF = "https://www.finances.gouv.qc.ca/Budget_et_mise_a_jour/budget/documents/Budget2627_PlanBudgetaire.pdf";
 
   // ===== INIT =====
   document.getElementById('hero-annee').textContent = BUDGET.annee;
@@ -472,9 +472,8 @@
   // Graphique trajectoire — SVG propre
   (function() {
     const data = [
-      { annee: "24-25", val: -8.1, reel: true },
-      { annee: "25-26", val: -11.4, reel: false },
-      { annee: "26-27", val: -7.1, reel: false },
+      { annee: "25-26", val: -7.7, reel: true },
+      { annee: "26-27", val: -6.3, reel: false },
       { annee: "27-28", val: -4.2, reel: false },
       { annee: "28-29", val: -1.4, reel: false },
       { annee: "29-30", val: 0.4, reel: false },
