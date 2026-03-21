@@ -246,6 +246,7 @@
       <li><a href="#parties-prenantes">Parties prenantes</a></li>
       <li><a href="#glossaire">Glossaire</a></li>
       <li><a href="#apropos">À propos</a></li>
+      <li><a href="#" onclick="document.querySelector('[href*=notebooklm]').click();return false;" style="color:var(--or);">🔬 Notebook</a></li>
     </ul>
     <div class="nav-social">
       <a href="https://kimleclerc.substack.com/" target="_blank">✉ Substack</a>
@@ -369,13 +370,87 @@
   </div>
 </div>
 
-<!-- CHAT LINK -->
-<div style="background: var(--bleu-nuit); padding: 32px 24px; text-align: center; border-top: 1px solid rgba(200,169,110,0.2);">
-  <a href="chat.html" style="display:inline-flex; align-items:center; gap:10px; background:var(--or); color:var(--bleu-nuit); font-family:var(--font-titre); font-weight:800; font-size:1rem; padding:14px 32px; border-radius:8px; text-decoration:none; transition: background 0.2s;">
-    💬 Posez vos questions sur le budget
-  </a>
-  <p style="margin-top:12px; font-size:0.78rem; color:rgba(255,255,255,0.35);">Alimenté par Gemini 3.1 Flash · Documents officiels MFQ</p>
-</div>
+<!-- NOTEBOOK LM SECTION -->
+<section style="background: var(--bleu-nuit); padding: 56px 24px; border-top: 1px solid rgba(200,169,110,0.2);">
+  <div style="max-width: 780px; margin: 0 auto;">
+
+    <!-- Header -->
+    <div style="text-align:center; margin-bottom: 36px;">
+      <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(200,169,110,0.12); border:1px solid rgba(200,169,110,0.3); color:var(--or-pale); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; padding:5px 14px; border-radius:99px; margin-bottom:16px;">
+        🔬 Espace de recherche interactif
+      </div>
+      <h2 style="font-family:var(--font-titre); font-size:clamp(1.6rem,3.5vw,2.2rem); font-weight:800; color:#fff; line-height:1.2; margin-bottom:12px;">
+        Interrogez le budget<br><span style="color:var(--or);">avec vos propres questions</span>
+      </h2>
+      <p style="font-size:0.95rem; color:rgba(255,255,255,0.6); max-width:560px; margin:0 auto; line-height:1.65;">
+        J'ai créé un espace NotebookLM alimenté par les documents officiels du budget, mes analyses et un débat audio. Posez n'importe quelle question — chaque réponse cite la page exacte.
+      </p>
+    </div>
+
+    <!-- 3 colonnes différenciateurs -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px; margin-bottom:32px;">
+
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(200,169,110,0.2); border-radius:10px; padding:20px;">
+        <div style="font-size:1.5rem; margin-bottom:10px;">📄</div>
+        <div style="font-family:var(--font-titre); font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:6px;">Sources précises</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.55;">
+          Contrairement à ChatGPT ou Gemini qui répondent de leur mémoire générale, chaque réponse cite la page exacte du document source. Zéro invention.
+        </div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(200,169,110,0.2); border-radius:10px; padding:20px;">
+        <div style="font-size:1.5rem; margin-bottom:10px;">🎯</div>
+        <div style="font-family:var(--font-titre); font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:6px;">Curation experte</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.55;">
+          Plan budgétaire, Budget en bref, analyses sectorielles, infographies et un podcast débat — une sélection de documents que j'ai choisis et contextualisés.
+        </div>
+      </div>
+
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(200,169,110,0.2); border-radius:10px; padding:20px;">
+        <div style="font-size:1.5rem; margin-bottom:10px;">🎙️</div>
+        <div style="font-family:var(--font-titre); font-size:0.9rem; font-weight:700; color:#fff; margin-bottom:6px;">Débat + vidéo inclus</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.55;">
+          Un podcast débat sur le budget et une vidéo explicative sont intégrés. Explorez, écoutez, créez vos propres documents à partir de mes sources.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Comment ça marche - simple -->
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:20px 24px; margin-bottom:28px;">
+      <div style="font-family:var(--font-titre); font-size:0.8rem; font-weight:700; color:var(--or); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px;">Comment utiliser le notebook</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px;">
+        <div style="display:flex; gap:10px; align-items:flex-start;">
+          <span style="background:var(--or); color:var(--bleu-nuit); font-family:var(--font-titre); font-weight:800; font-size:0.75rem; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">1</span>
+          <span style="font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.5;">Cliquez le bouton ci-dessous — un compte Google suffit</span>
+        </div>
+        <div style="display:flex; gap:10px; align-items:flex-start;">
+          <span style="background:var(--or); color:var(--bleu-nuit); font-family:var(--font-titre); font-weight:800; font-size:0.75rem; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">2</span>
+          <span style="font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.5;">Posez votre question en français ou en anglais</span>
+        </div>
+        <div style="display:flex; gap:10px; align-items:flex-start;">
+          <span style="background:var(--or); color:var(--bleu-nuit); font-family:var(--font-titre); font-weight:800; font-size:0.75rem; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">3</span>
+          <span style="font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.5;">Chaque réponse cite le document et la page exacte</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA principal -->
+    <div style="text-align:center;">
+      <a href="https://notebooklm.google.com/notebook/5ef2a39b-5105-4856-a68e-d65d952e55e3"
+         target="_blank"
+         style="display:inline-flex; align-items:center; gap:10px; background:var(--or); color:var(--bleu-nuit); font-family:var(--font-titre); font-weight:800; font-size:1rem; padding:15px 36px; border-radius:8px; text-decoration:none; transition:opacity 0.2s;"
+         onmouseover="this.style.opacity='0.88'"
+         onmouseout="this.style.opacity='1'">
+        🔬 Ouvrir le notebook du budget
+      </a>
+      <p style="margin-top:10px; font-size:0.75rem; color:rgba(255,255,255,0.3);">
+        NotebookLM par Google · Compte Google requis · Gratuit
+      </p>
+    </div>
+
+  </div>
+</section>
 
 <!-- NOTE IA -->
 <section class="ia-note">
@@ -410,7 +485,7 @@
           <span>✉</span> Substack
         </a>
         <a href="https://www.aucoinstrategie.com/" target="_blank" class="apropos-lien">
-          <span>↗</span> aucoinstrategie.com
+          <span>↗</span> aucoin.ca
         </a>
       </div>
     </div>
